@@ -601,6 +601,20 @@ class UriTest extends TestCase
         $this->assertSame('ουτοπία.δπθ.gr', $uri->getHost());
     }
 
+    public function testUtf8UriWithLocale()
+    {
+        $locale = setlocale(LC_CTYPE, 0);
+        setlocale(LC_CTYPE, 'en_GB.UTF-8');
+
+        try {
+            $uri = new Uri('http://ουτοπία.δπθ.gr/');
+
+            $this->assertSame('ουτοπία.δπθ.gr', $uri->getHost());
+        } finally {
+            setlocale(LC_CTYPE, $locale);
+        }
+    }
+
     /**
      * @dataProvider utf8PathsDataProvider
      */
@@ -609,6 +623,23 @@ class UriTest extends TestCase
         $uri = new Uri($url);
 
         $this->assertSame($result, $uri->getPath());
+    }
+
+    /**
+     * @dataProvider utf8PathsDataProvider
+     */
+    public function testUtf8PathWithLocale($url, $result)
+    {
+        $locale = setlocale(LC_CTYPE, 0);
+        setlocale(LC_CTYPE, 'en_GB.UTF-8');
+
+        try {
+            $uri = new Uri($url);
+
+            $this->assertSame($result, $uri->getPath());
+        } finally {
+            setlocale(LC_CTYPE, $locale);
+        }
     }
 
 
@@ -628,6 +659,23 @@ class UriTest extends TestCase
         $uri = new Uri($url);
 
         $this->assertSame($result, $uri->getQuery());
+    }
+
+    /**
+     * @dataProvider utf8QueryStringsDataProvider
+     */
+    public function testUtf8QueryWithLocale($url, $result)
+    {
+        $locale = setlocale(LC_CTYPE, 0);
+        setlocale(LC_CTYPE, 'en_GB.UTF-8');
+
+        try {
+            $uri = new Uri($url);
+
+            $this->assertSame($result, $uri->getQuery());
+        } finally {
+            setlocale(LC_CTYPE, $locale);
+        }
     }
 
     public function utf8QueryStringsDataProvider()
