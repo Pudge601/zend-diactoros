@@ -604,14 +604,20 @@ class UriTest extends TestCase
     public function testUtf8UriWithLocale()
     {
         $locale = setlocale(LC_CTYPE, 0);
-        setlocale(LC_CTYPE, 'en_GB.UTF-8');
+
+        if (($setlocaleResult = setlocale(LC_CTYPE, 'en_GB.UTF-8')) !== 'en_GB.UTF-8') {
+            $this->fail(
+                'Couldn\'t set locale, result: ' . var_export($setlocaleResult, true) .
+                ', initial locale: ' . var_export($locale, true)
+            );
+        }
 
         try {
             $uri = new Uri('http://ουτοπία.δπθ.gr/');
 
             $this->assertSame('ουτοπία.δπθ.gr', $uri->getHost());
         } finally {
-            setlocale(LC_CTYPE, $locale);
+            setlocale(LC_CTYPE, $locale); // reset locale
         }
     }
 
@@ -631,7 +637,13 @@ class UriTest extends TestCase
     public function testUtf8PathWithLocale($url, $result)
     {
         $locale = setlocale(LC_CTYPE, 0);
-        setlocale(LC_CTYPE, 'en_GB.UTF-8');
+
+        if (($setlocaleResult = setlocale(LC_CTYPE, 'en_GB.UTF-8')) !== 'en_GB.UTF-8') {
+            $this->fail(
+                'Couldn\'t set locale, result: ' . var_export($setlocaleResult, true) .
+                ', initial locale: ' . var_export($locale, true)
+            );
+        }
 
         try {
             $uri = new Uri($url);
@@ -667,7 +679,13 @@ class UriTest extends TestCase
     public function testUtf8QueryWithLocale($url, $result)
     {
         $locale = setlocale(LC_CTYPE, 0);
-        setlocale(LC_CTYPE, 'en_GB.UTF-8');
+
+        if (($setlocaleResult = setlocale(LC_CTYPE, 'en_GB.UTF-8')) !== 'en_GB.UTF-8') {
+            $this->fail(
+                'Couldn\'t set locale, result: ' . var_export($setlocaleResult, true) .
+                ', initial locale: ' . var_export($locale, true)
+            );
+        }
 
         try {
             $uri = new Uri($url);
