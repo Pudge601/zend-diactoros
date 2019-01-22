@@ -661,6 +661,7 @@ class UriTest extends TestCase
             ['http://example.com/тестовый_путь/', '/тестовый_путь/'],
             ['http://example.com/ουτοπία/', '/ουτοπία/'],
             ['http://example.com/道/', '/道/'],
+            ['http://example.com/Valérie/', '/Valérie/'],
         ];
     }
 
@@ -703,6 +704,7 @@ class UriTest extends TestCase
             ['http://example.com/?q=тестовый_путь', 'q=тестовый_путь'],
             ['http://example.com/?q=ουτοπία', 'q=ουτοπία'],
             ['http://example.com/?q=道', 'q=道'],
+            ['http://example.com/?q=Valérie', 'q=Valérie'],
         ];
     }
 
